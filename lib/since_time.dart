@@ -2,6 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// TODO: Implement a HeartCard widget
+// TODO: Implement a text in the HeartCard widget which
+// TODO: will display time (first in days, then in hours, minutes and seconds) after clicking on this text
+
 class SinceTime extends StatefulWidget {
   const SinceTime({super.key});
 
@@ -82,7 +86,7 @@ class _SinceTimeState extends State<SinceTime> {
             child: Column(
               children: [
                 Text(
-                  'Time being together with kiciuś<3:',
+                  'Time being together with<3:',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: colorScheme.onPrimary,
