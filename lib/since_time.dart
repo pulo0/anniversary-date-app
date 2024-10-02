@@ -16,9 +16,9 @@ class SinceTime extends StatefulWidget {
 class _SinceTimeState extends State<SinceTime> {
   DateTime time = DateTime.now();
   Timer? timer;
-  final DateTime eventDate = DateTime(2021, DateTime.december, 28);
-  final List<String> timeNames = ['days', 'hours', 'minutes', 'seconds'];
-
+  final DateTime eventDate = DateTime(2021, DateTime.december, 28, 20, 30);
+  final List<String> timeNames = ['years' ,'days', 'hours', 'minutes', 'seconds'];
+  int perTimeIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -43,6 +43,17 @@ class _SinceTimeState extends State<SinceTime> {
   List<int> calculateTimeSinceEvent() {
     final difference = time.difference(eventDate);
     return [
+      difference.inDays ~/ 365, // years
+      difference.inDays, // days
+      difference.inHours, // hours
+      difference.inMinutes, // minutes
+      difference.inSeconds, // seconds
+    ];
+  }
+
+  List<int> calculateTimeSinceEventFixedTime() {
+    final difference = time.difference(eventDate);
+    return [
       difference.inDays,
       difference.inHours % 24,
       difference.inMinutes % 60,
@@ -53,7 +64,7 @@ class _SinceTimeState extends State<SinceTime> {
   String getCalculatedTimeToString() {
     String total = '';
     int i = 0;
-    for (final time in calculateTimeSinceEvent()) {
+    for (final time in calculateTimeSinceEventFixedTime()) {
       total += '${time.toString()} ${timeNames[i]}, ';
       i++;
     }
@@ -63,6 +74,7 @@ class _SinceTimeState extends State<SinceTime> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return SizedBox(
       width: 350,
       child: AnimatedContainer(
@@ -86,7 +98,7 @@ class _SinceTimeState extends State<SinceTime> {
             child: Column(
               children: [
                 Text(
-                  'Time being together with<3:',
+                  'Time being together with kiciuś<3:',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: colorScheme.onPrimary,
@@ -115,15 +127,25 @@ class _SinceTimeState extends State<SinceTime> {
                   size: 30,
                   semanticLabel: 'Heart',
                 ),
-                Text(
-                  getCalculatedTimeToString(),
-                  style: TextStyle(
-                    color: colorScheme.onPrimary,
-                    fontSize: 30,
-                    fontFamily:
-                        GoogleFonts.rosarioTextTheme().bodyMedium?.fontFamily,
+                TextButton(
+                  onPressed: () {
+                    perTimeIndex++;
+                    if (perTimeIndex == timeNames.length + 1) {
+                      perTimeIndex = 0;
+                    }
+                  },
+                  child: Text(
+                    perTimeIndex == timeNames.length
+                        ? getCalculatedTimeToString()
+                        : '${calculateTimeSinceEvent()[perTimeIndex].toString()} ${timeNames[perTimeIndex]}',
+                    style: TextStyle(
+                      color: colorScheme.onPrimary,
+                      fontSize: 30,
+                      fontFamily:
+                          GoogleFonts.rosarioTextTheme().bodyMedium?.fontFamily,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),
