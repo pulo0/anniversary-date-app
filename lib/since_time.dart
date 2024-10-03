@@ -46,7 +46,7 @@ class _SinceTimeState extends State<SinceTime> {
   // Calculated time
   // (for displaying time in years, days, hours, minutes and seconds)
   // (in cycle)
-  List<int> calcTimeSincEv() {
+  List<int> calcTimeSinceEv() {
     final difference = time.difference(eventDate);
     return [
       difference.inDays ~/ 365, // years
@@ -146,7 +146,7 @@ class _SinceTimeState extends State<SinceTime> {
                   child: Text(
                     perClickTimeIndex == timeNames.length
                         ? getCalculatedTimeToString()
-                        : '${calcTimeSincEv()[perClickTimeIndex].toString()} ${timeNames[perClickTimeIndex]}',
+                        : '${calcTimeSinceEv()[perClickTimeIndex].toString()} ${timeNames[perClickTimeIndex]}',
                     style: TextStyle(
                       color: colorScheme.onPrimary,
                       fontSize: 30,
