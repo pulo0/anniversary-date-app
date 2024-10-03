@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:anniversary_date_app/since_time.dart';
+import 'package:anniversary_date_app/widgets/since_time.dart';
 
 void main() {
   runApp(const MainApp());

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:anniversary_date_app/tools/time_calculations.dart';
+
 
 class SinceTime extends StatefulWidget {
   const SinceTime({super.key});
@@ -10,22 +12,12 @@ class SinceTime extends StatefulWidget {
 }
 
 class _SinceTimeState extends State<SinceTime> {
-
-  DateTime time = DateTime.now();
-  Timer? timer;
-  final DateTime eventDate = DateTime(2021, DateTime.december, 28, 20, 30);
-  static List<String> timeNames = [
-    'years',
-    'days',
-    'hours',
-    'minutes',
-    'seconds'];
-  int perClickTimeIndex = 0;
+  TimeCalculations tCalc = TimeCalculations();
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(
+    tCalc.timer = Timer.periodic(
       const Duration(milliseconds: 500),
       (timer) => _updateTime(),
     );
@@ -33,56 +25,23 @@ class _SinceTimeState extends State<SinceTime> {
 
   @override
   void dispose() {
-    timer?.cancel();
+    tCalc.timer?.cancel();
     super.dispose();
   }
 
   void _updateTime() {
     setState(() {
-      time = DateTime.now();
+      tCalc.time = DateTime.now();
     });
-  }
-
-  // Calculated time
-  // (for displaying time in years, days, hours, minutes and seconds)
-  // (in cycle)
-  List<int> calcTimeSinceEv() {
-    final difference = time.difference(eventDate);
-    return [
-      difference.inDays ~/ 365, // years
-      difference.inDays, // days
-      difference.inHours, // hours
-      difference.inMinutes, // minutes
-      difference.inSeconds, // seconds
-    ];
-  }
-
-  // Calculated time since some event (for full display of time)
-  List<int> calculateTimeSinceEventFixedTime() {
-    final difference = time.difference(eventDate);
-    return [
-      difference.inDays, // days
-      difference.inHours % 24, // hours
-      difference.inMinutes % 60, // minutes
-      difference.inSeconds % 60, //seconds
-    ];
-  }
-
-  // Method for not concatenating a string
-  // that would be too long (cleaner code)
-  String getCalculatedTimeToString() {
-    String total = '';
-    int indexExcludeYear = 1;
-    for (final time in calculateTimeSinceEventFixedTime()) {
-      total += '${time.toString()} ${timeNames[indexExcludeYear]}, ';
-      indexExcludeYear++;
-    }
-    return total.substring(0, total.length - 2);
   }
 
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final textFont = GoogleFonts.rosarioTextTheme();
+    final shape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    );
 
     return SizedBox(
       width: 350,
@@ -91,12 +50,8 @@ class _SinceTimeState extends State<SinceTime> {
         curve: Curves.easeInOut,
         child: Card(
           shape: ShapeBorder.lerp(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
+            shape,
+            shape,
             0.5,
           ),
           elevation: 10,
@@ -113,7 +68,7 @@ class _SinceTimeState extends State<SinceTime> {
                     color: colorScheme.onPrimary,
                     fontSize: 20,
                     fontFamily:
-                        GoogleFonts.rosarioTextTheme().bodyLarge?.fontFamily,
+                        textFont.bodyLarge?.fontFamily,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -124,7 +79,7 @@ class _SinceTimeState extends State<SinceTime> {
                     color: colorScheme.onPrimary,
                     fontSize: 20,
                     fontFamily:
-                        GoogleFonts.rosarioTextTheme().bodyMedium?.fontFamily,
+                        textFont.bodyMedium?.fontFamily,
                   ),
                 ),
                 const SizedBox(
@@ -138,15 +93,15 @@ class _SinceTimeState extends State<SinceTime> {
                 ),
                 TextButton(
                   onPressed: () {
-                    perClickTimeIndex++;
-                    if (perClickTimeIndex == timeNames.length + 1) {
-                      perClickTimeIndex = 0;
+                    tCalc.perClickTimeIndex++;
+                    if (tCalc.perClickTimeIndex == tCalc.timeNames.length + 1) {
+                      tCalc.perClickTimeIndex = 0;
                     }
                   },
                   child: Text(
-                    perClickTimeIndex == timeNames.length
-                        ? getCalculatedTimeToString()
-                        : '${calcTimeSinceEv()[perClickTimeIndex].toString()} ${timeNames[perClickTimeIndex]}',
+                    tCalc.perClickTimeIndex == tCalc.timeNames.length
+                        ? tCalc.getCalculatedTimeToString()
+                        : tCalc.getCalculatedTimeToStringEach(),
                     style: TextStyle(
                       color: colorScheme.onPrimary,
                       fontSize: 30,
