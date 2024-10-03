@@ -2,10 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// TODO: Implement a HeartCard widget
-// TODO: Implement a text in the HeartCard widget which
-// TODO: will display time (first in days, then in hours, minutes and seconds) after clicking on this text
-
 class SinceTime extends StatefulWidget {
   const SinceTime({super.key});
 
@@ -14,11 +10,18 @@ class SinceTime extends StatefulWidget {
 }
 
 class _SinceTimeState extends State<SinceTime> {
+
   DateTime time = DateTime.now();
   Timer? timer;
   final DateTime eventDate = DateTime(2021, DateTime.december, 28, 20, 30);
-  final List<String> timeNames = ['years' ,'days', 'hours', 'minutes', 'seconds'];
-  int perTimeIndex = 0;
+  static List<String> timeNames = [
+    'years',
+    'days',
+    'hours',
+    'minutes',
+    'seconds'];
+  int perClickTimeIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +43,10 @@ class _SinceTimeState extends State<SinceTime> {
     });
   }
 
-  List<int> calculateTimeSinceEvent() {
+  // Calculated time
+  // (for displaying time in years, days, hours, minutes and seconds)
+  // (in cycle)
+  List<int> calcTimeSincEv() {
     final difference = time.difference(eventDate);
     return [
       difference.inDays ~/ 365, // years
@@ -51,22 +57,25 @@ class _SinceTimeState extends State<SinceTime> {
     ];
   }
 
+  // Calculated time since some event (for full display of time)
   List<int> calculateTimeSinceEventFixedTime() {
     final difference = time.difference(eventDate);
     return [
-      difference.inDays,
-      difference.inHours % 24,
-      difference.inMinutes % 60,
-      difference.inSeconds % 60,
+      difference.inDays, // days
+      difference.inHours % 24, // hours
+      difference.inMinutes % 60, // minutes
+      difference.inSeconds % 60, //seconds
     ];
   }
 
+  // Method for not concatenating a string
+  // that would be too long (cleaner code)
   String getCalculatedTimeToString() {
     String total = '';
-    int i = 0;
+    int indexExcludeYear = 1;
     for (final time in calculateTimeSinceEventFixedTime()) {
-      total += '${time.toString()} ${timeNames[i]}, ';
-      i++;
+      total += '${time.toString()} ${timeNames[indexExcludeYear]}, ';
+      indexExcludeYear++;
     }
     return total.substring(0, total.length - 2);
   }
@@ -129,15 +138,15 @@ class _SinceTimeState extends State<SinceTime> {
                 ),
                 TextButton(
                   onPressed: () {
-                    perTimeIndex++;
-                    if (perTimeIndex == timeNames.length + 1) {
-                      perTimeIndex = 0;
+                    perClickTimeIndex++;
+                    if (perClickTimeIndex == timeNames.length + 1) {
+                      perClickTimeIndex = 0;
                     }
                   },
                   child: Text(
-                    perTimeIndex == timeNames.length
+                    perClickTimeIndex == timeNames.length
                         ? getCalculatedTimeToString()
-                        : '${calculateTimeSinceEvent()[perTimeIndex].toString()} ${timeNames[perTimeIndex]}',
+                        : '${calcTimeSincEv()[perClickTimeIndex].toString()} ${timeNames[perClickTimeIndex]}',
                     style: TextStyle(
                       color: colorScheme.onPrimary,
                       fontSize: 30,
