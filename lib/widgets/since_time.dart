@@ -37,6 +37,9 @@ class _SinceTimeState extends State<SinceTime> {
 
   @override
   Widget build(BuildContext context) {
+    const double boxWidth = 350.0;
+    const double boxHeightSpacing = 10.0;
+    const double elv = 10.0;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final textFont = GoogleFonts.rosarioTextTheme();
     final shape = RoundedRectangleBorder(
@@ -44,7 +47,7 @@ class _SinceTimeState extends State<SinceTime> {
     );
 
     return SizedBox(
-      width: 350,
+      width: boxWidth,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
@@ -54,7 +57,7 @@ class _SinceTimeState extends State<SinceTime> {
             shape,
             0.5,
           ),
-          elevation: 10,
+          elevation: elv,
           color: colorScheme.primary,
           shadowColor: colorScheme.onPrimaryContainer,
           child: Padding(
@@ -71,7 +74,7 @@ class _SinceTimeState extends State<SinceTime> {
                         textFont.bodyLarge?.fontFamily,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: boxHeightSpacing),
                 Text(
                   '28th December 2021',
                   textAlign: TextAlign.center,
@@ -82,9 +85,7 @@ class _SinceTimeState extends State<SinceTime> {
                         textFont.bodyMedium?.fontFamily,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: boxHeightSpacing),
                 Icon(
                   Icons.favorite,
                   color: colorScheme.onPrimary,
