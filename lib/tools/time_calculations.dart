@@ -4,7 +4,8 @@ class TimeCalculations {
   DateTime time = DateTime.now();
   Timer? timer;
   int perClickTimeIndex = 0;
-  final DateTime eventDate = DateTime(2021, DateTime.december, 28, 20, 30);
+  // Placeholder hardcoded date for now
+  final DateTime eventDate = DateTime(2021, DateTime.december, 28, 20, 30); // TODO: User given date
   final List<String> timeNames = [
     'years',
     'days',
