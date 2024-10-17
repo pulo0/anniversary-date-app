@@ -33,9 +33,14 @@ class MainApp extends StatelessWidget {
             ],
           ),
         ),
-        child: const Scaffold(
+        child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: Center(
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {},
+            label: const Text('Add date'),
+            icon: const Icon(Icons.date_range_outlined),
+          ),
+          body: const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

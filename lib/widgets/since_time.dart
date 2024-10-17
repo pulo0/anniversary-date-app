@@ -107,7 +107,7 @@ class _SinceTimeState extends State<SinceTime> {
                       color: colorScheme.onPrimary,
                       fontSize: 30,
                       fontFamily:
-                          GoogleFonts.rosarioTextTheme().bodyMedium?.fontFamily,
+                          textFont.bodyMedium?.fontFamily,
                     ),
                     textAlign: TextAlign.center,
                   ),
