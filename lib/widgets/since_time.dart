@@ -100,9 +100,9 @@ class _SinceTimeState extends State<SinceTime> {
                     }
                   },
                   child: Text(
-                    tCalc.perClickTimeIndex == tCalc.timeNames.length
-                        ? tCalc.getCalculatedTimeToString()
-                        : tCalc.getCalculatedTimeToStringEach(),
+                    tCalc.perClickTimeIndex != tCalc.timeNames.length
+                        ? tCalc.getCalculatedTimeToStringEach()
+                        : tCalc.getCalculatedTimeToString(),
                     style: TextStyle(
                       color: colorScheme.onPrimary,
                       fontSize: 30,

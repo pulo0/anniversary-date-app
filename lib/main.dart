@@ -29,7 +29,7 @@ class MainApp extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: [
               colorScheme.primary,
-              colorScheme.onSecondaryContainer,
+              colorScheme.onTertiaryContainer,
             ],
           ),
         ),
@@ -39,6 +39,8 @@ class MainApp extends StatelessWidget {
             onPressed: () {},
             label: const Text('Add date'),
             icon: const Icon(Icons.date_range_outlined),
+            backgroundColor: colorScheme.primary,
+            foregroundColor: colorScheme.onPrimary,
           ),
           body: const Center(
             child: Column(
