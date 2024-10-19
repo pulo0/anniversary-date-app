@@ -3,24 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
 import 'date_item.dart';
 
-class TabScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _TabScreen();
-}
-
-class _TabScreen extends State<TabScreen> {
-
-  void _openAddDateOverlay() {
-    showModalBottomSheet(
-      context: context,
-      useSafeArea: true,
-      isScrollControlled: true,
-      builder: (ctx) => AddDate(),
-    );
-  }
+class TabScreen extends StatelessWidget {
+  const TabScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    void openAddDateOverlay() {
+      showModalBottomSheet(
+        context: context,
+        useSafeArea: true,
+        isScrollControlled: true,
+        builder: (ctx) => const AddDate(),
+      );
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -36,7 +32,7 @@ class _TabScreen extends State<TabScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: _openAddDateOverlay,
+          onPressed: openAddDateOverlay,
           label: const Text('Add date'),
           icon: const Icon(Icons.date_range_outlined),
           backgroundColor: colorScheme.primary,

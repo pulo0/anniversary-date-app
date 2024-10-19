@@ -18,7 +18,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Loading Indicator',
       theme: mainTheme(),
-      home: TabScreen(),
+      home: const TabScreen(),
     );
   }
 }
