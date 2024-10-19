@@ -20,6 +20,7 @@ class _AddDateState extends State<AddDate> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.fromLTRB(horPadding, verPadding, horPadding,
                 keyboardPlacement + verPadding),
