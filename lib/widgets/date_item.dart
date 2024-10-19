@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:anniversary_date_app/tools/time_calculations.dart';
 
-
-class SinceTime extends StatefulWidget {
-  const SinceTime({super.key});
+class DateItem extends StatefulWidget {
+  const DateItem({super.key});
 
   @override
-  State<SinceTime> createState() => _SinceTimeState();
+  State<DateItem> createState() => _DateItemState();
 }
 
-class _SinceTimeState extends State<SinceTime> {
+class _DateItemState extends State<DateItem> {
   TimeCalculations tCalc = TimeCalculations();
 
   @override
@@ -70,8 +69,7 @@ class _SinceTimeState extends State<SinceTime> {
                   style: TextStyle(
                     color: colorScheme.onPrimary,
                     fontSize: 20,
-                    fontFamily:
-                        textFont.bodyLarge?.fontFamily,
+                    fontFamily: textFont.bodyLarge?.fontFamily,
                   ),
                 ),
                 const SizedBox(height: boxHeightSpacing),
@@ -81,8 +79,7 @@ class _SinceTimeState extends State<SinceTime> {
                   style: TextStyle(
                     color: colorScheme.onPrimary,
                     fontSize: 20,
-                    fontFamily:
-                        textFont.bodyMedium?.fontFamily,
+                    fontFamily: textFont.bodyMedium?.fontFamily,
                   ),
                 ),
                 const SizedBox(height: boxHeightSpacing),
@@ -106,8 +103,7 @@ class _SinceTimeState extends State<SinceTime> {
                     style: TextStyle(
                       color: colorScheme.onPrimary,
                       fontSize: 30,
-                      fontFamily:
-                          textFont.bodyMedium?.fontFamily,
+                      fontFamily: textFont.bodyMedium?.fontFamily,
                     ),
                     textAlign: TextAlign.center,
                   ),
