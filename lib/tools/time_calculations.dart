@@ -13,22 +13,18 @@ class TimeCalculations {
     'minutes',
     'seconds'];
 
-  // Calculated time
-  // (for displaying time in years, days, hours, minutes and seconds)
-  // (in cycle)
-  List<int> calcTimeSinceEv() {
+  List<int> calcTimeCycle() {
     final difference = time.difference(eventDate);
     return [
-      difference.inDays ~/ 365, // years
-      difference.inDays, // days
-      difference.inHours, // hours
-      difference.inMinutes, // minutes
-      difference.inSeconds, // seconds
+      difference.inDays ~/ 365,
+      difference.inDays,
+      difference.inHours,
+      difference.inMinutes,
+      difference.inSeconds,
     ];
   }
 
-  // Calculated time since some event (for full display of time)
-  List<int> calculateTimeSinceEventFixedTime() {
+  List<int> calcTimeFull() {
     final difference = time.difference(eventDate);
     return [
       difference.inDays, // days
@@ -38,22 +34,19 @@ class TimeCalculations {
     ];
   }
 
-  // Method for not concatenating a string
-  // that would be too long (cleaner code)
-  String getCalculatedTimeToString() {
+  String getCalcTimeToStr() {
     String total = '';
     int indexExcludeYear = 1;
-    for (final time in calculateTimeSinceEventFixedTime()) {
+    for (final time in calcTimeFull()) {
       total += '${time.toString()} ${timeNames[indexExcludeYear]}, ';
       indexExcludeYear++;
     }
     return total.substring(0, total.length - 2);
   }
 
-  // Method for displaying time in years, days, hours, minutes and seconds
-  String getCalculatedTimeToStringEach() {
+  String getCalcTimeToStrCycle() {
     return
-      '${calcTimeSinceEv()[perClickTimeIndex]} ${timeNames[perClickTimeIndex]}';
+      '${calcTimeCycle()[perClickTimeIndex]} ${timeNames[perClickTimeIndex]}';
   }
 }
 

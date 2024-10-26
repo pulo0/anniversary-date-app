@@ -98,8 +98,8 @@ class _DateItemState extends State<DateItem> {
                   },
                   child: Text(
                     tCalc.perClickTimeIndex != tCalc.timeNames.length
-                        ? tCalc.getCalculatedTimeToStringEach()
-                        : tCalc.getCalculatedTimeToString(),
+                        ? tCalc.getCalcTimeToStrCycle()
+                        : tCalc.getCalcTimeToStr(),
                     style: TextStyle(
                       color: colorScheme.onPrimary,
                       fontSize: 30,

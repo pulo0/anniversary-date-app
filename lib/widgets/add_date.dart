@@ -1,5 +1,6 @@
 import 'package:anniversary_date_app/style/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AddDate extends StatefulWidget {
   const AddDate({super.key});
@@ -11,8 +12,14 @@ class AddDate extends StatefulWidget {
 class _AddDateState extends State<AddDate> {
   final double horPadding = 30;
   final double verPadding = 45;
+  final double radius = 4;
+  final double opacity = 0.65;
+  final double allPadding = 10;
   final _nameController = TextEditingController();
-  DateTime? _selectedDateTime;
+  final _dateController = TextEditingController();
+  final DateTime dateNow = DateTime.now();
+  final DateTime dateLast = DateTime(1800);
+  DateTime? selectedDateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +29,12 @@ class _AddDateState extends State<AddDate> {
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.fromLTRB(horPadding, verPadding, horPadding,
-                keyboardPlacement + verPadding),
+            padding: EdgeInsets.fromLTRB(
+              horPadding,
+              verPadding,
+              horPadding,
+              keyboardPlacement + verPadding,
+            ),
             child: Column(
               children: <Widget>[
                 TextField(
@@ -40,16 +51,38 @@ class _AddDateState extends State<AddDate> {
                         color: colorScheme.primary,
                       ),
                     ),
+                    // fillColor: Colors.transparent,
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     labelText: 'Name',
                     hintText: 'Special event',
-                    hintTextDirection: TextDirection.ltr,
                     hintStyle: TextStyle(
-                      color: colorScheme.outline.withOpacity(0.65),
+                      color: colorScheme.outline.withOpacity(opacity),
                     ),
                     filled: true,
                     // fillColor: colorScheme.onTertiary,
-                    contentPadding: const EdgeInsets.all(10),
+                    contentPadding: EdgeInsets.all(allPadding),
+                  ),
+                ),
+                TextField(
+                  controller: _dateController,
+                  onTap: () => _openDateSelector(context),
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: colorScheme.primary,
+                      ),
+                    ),
+                    // fillColor: Colors.transparent,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    labelText: 'Date',
+                    icon: const Icon(Icons.date_range_rounded),
+                    filled: true,
+                    // fillColor: colorScheme.onTertiary,
+                    contentPadding: EdgeInsets.all(allPadding),
                   ),
                 ),
               ],
@@ -58,5 +91,16 @@ class _AddDateState extends State<AddDate> {
         );
       },
     );
+  }
+
+  _openDateSelector(BuildContext context) async {
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: dateNow,
+      firstDate: dateLast,
+      lastDate: dateNow,
+    );
+    if (newDate == null) return;
+    _dateController.text = DateFormat('yyyy-MM-dd').format(newDate);
   }
 }
