@@ -1,6 +1,6 @@
-import 'package:anniversary_date_app/style/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:anniversary_date_app/widgets/custom_input_field.dart';
 
 class AddDate extends StatefulWidget {
   const AddDate({super.key});
@@ -12,9 +12,6 @@ class AddDate extends StatefulWidget {
 class _AddDateState extends State<AddDate> {
   final double horPadding = 30;
   final double verPadding = 45;
-  final double radius = 4;
-  final double opacity = 0.65;
-  final double allPadding = 10;
   final _nameController = TextEditingController();
   final _dateController = TextEditingController();
   final DateTime dateNow = DateTime.now();
@@ -37,53 +34,19 @@ class _AddDateState extends State<AddDate> {
             ),
             child: Column(
               children: <Widget>[
-                TextField(
+                CustomInputField(
                   controller: _nameController,
-                  autocorrect: true,
-                  maxLength: 40,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: colorScheme.primary,
-                      ),
-                    ),
-                    // fillColor: Colors.transparent,
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    labelText: 'Name',
-                    hintText: 'Special event',
-                    hintStyle: TextStyle(
-                      color: colorScheme.outline.withOpacity(opacity),
-                    ),
-                    filled: true,
-                    // fillColor: colorScheme.onTertiary,
-                    contentPadding: EdgeInsets.all(allPadding),
-                  ),
+                  labelTxt: 'Name',
+                  hintTxt: 'Special event name',
+                  isInputText: true,
                 ),
-                TextField(
+                CustomInputField(
                   controller: _dateController,
-                  onTap: () => _openDateSelector(context),
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: colorScheme.primary,
-                      ),
-                    ),
-                    // fillColor: Colors.transparent,
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    labelText: 'Date',
-                    icon: const Icon(Icons.date_range_rounded),
-                    filled: true,
-                    // fillColor: colorScheme.onTertiary,
-                    contentPadding: EdgeInsets.all(allPadding),
-                  ),
+                  labelTxt: 'Date',
+                  hintTxt: 'Select date of event',
+                  isInputText: false,
+                  icon: const Icon(Icons.date_range_outlined),
+                  showPicker: () => _openDateSelector(context),
                 ),
               ],
             ),
