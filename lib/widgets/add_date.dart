@@ -19,6 +19,13 @@ class _AddDateState extends State<AddDate> {
   DateTime? selectedDateTime;
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _dateController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final keyboardPlacement = MediaQuery.of(context).viewInsets.bottom;
     return LayoutBuilder(

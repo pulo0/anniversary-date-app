@@ -4,14 +4,17 @@ class TimeCalculations {
   DateTime time = DateTime.now();
   Timer? timer;
   int perClickTimeIndex = 0;
+
   // Placeholder hardcoded date for now
-  final DateTime eventDate = DateTime(2021, DateTime.december, 28, 20, 30); // TODO: User given date
+  final DateTime eventDate =
+      DateTime(2021, DateTime.december, 28, 20, 30); // TODO: User given date
   final List<String> timeNames = [
     'years',
     'days',
     'hours',
     'minutes',
-    'seconds'];
+    'seconds'
+  ];
 
   List<int> calcTimeCycle() {
     final difference = time.difference(eventDate);
@@ -35,18 +38,14 @@ class TimeCalculations {
   }
 
   String getCalcTimeToStr() {
-    String total = '';
-    int indexExcludeYear = 1;
-    for (final time in calcTimeFull()) {
-      total += '${time.toString()} ${timeNames[indexExcludeYear]}, ';
-      indexExcludeYear++;
-    }
-    return total.substring(0, total.length - 2);
+    return calcTimeFull()
+        .asMap()
+        .entries
+        .map((e) => '${e.value} ${timeNames[e.key + 1]}')
+        .join(', ');
   }
 
   String getCalcTimeToStrCycle() {
-    return
-      '${calcTimeCycle()[perClickTimeIndex]} ${timeNames[perClickTimeIndex]}';
+    return '${calcTimeCycle()[perClickTimeIndex]} ${timeNames[perClickTimeIndex]}';
   }
 }
-
