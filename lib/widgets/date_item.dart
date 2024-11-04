@@ -92,8 +92,11 @@ class _DateItemState extends State<DateItem> {
                 TextButton(
                   onPressed: () {
                     setState(() {
-                      tCalc.perClickTimeIndex = (tCalc.perClickTimeIndex + 1) %
-                          tCalc.timeNames.length;
+                      tCalc.perClickTimeIndex++;
+                      if (tCalc.perClickTimeIndex ==
+                          tCalc.timeNames.length + 1) {
+                        tCalc.perClickTimeIndex = 0;
+                      }
                     });
                   },
                   child: Text(
