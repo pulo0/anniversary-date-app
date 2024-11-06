@@ -1,7 +1,7 @@
-import 'package:anniversary_date_app/widgets/add_date.dart';
 import 'package:flutter/material.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
-import 'date_item.dart';
+import 'package:anniversary_date_app/widgets/date_bottom_sheet.dart';
+import 'package:anniversary_date_app/widgets/date_item.dart';
 
 class TabScreen extends StatelessWidget {
   const TabScreen({super.key});
@@ -14,7 +14,7 @@ class TabScreen extends StatelessWidget {
         context: context,
         useSafeArea: true,
         isScrollControlled: true,
-        builder: (ctx) => const AddDate(),
+        builder: (ctx) => const DateBottomSheet(),
       );
     }
 
