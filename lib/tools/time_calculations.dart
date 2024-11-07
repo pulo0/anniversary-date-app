@@ -1,13 +1,16 @@
 import 'dart:async';
 
+import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
+
 class TimeCalculations {
+  final sharedPrefsDate = SharedDatePreferences();
+
   DateTime time = DateTime.now();
   Timer? timer;
   int perClickTimeIndex = 0;
 
-  // Placeholder hardcoded date for now
-  final DateTime eventDate =
-      DateTime(2021, DateTime.december, 28, 20, 30); // TODO: User given date
+  late DateTime eventDate;
+
   final List<String> timeNames = [
     'years',
     'days',
@@ -15,6 +18,15 @@ class TimeCalculations {
     'minutes',
     'seconds'
   ];
+
+  Future<void> initializeEventDate() async {
+    int? storedDate = await sharedPrefsDate.getDateTimestampValue('date');
+    if (storedDate != null) {
+      eventDate = DateTime.fromMillisecondsSinceEpoch(storedDate);
+    } else {
+      eventDate = DateTime.now();
+    }
+  }
 
   List<int> calcTimeCycle() {
     final difference = time.difference(eventDate);

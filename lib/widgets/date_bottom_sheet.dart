@@ -1,3 +1,4 @@
+import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:anniversary_date_app/widgets/custom_input_field.dart';
@@ -10,6 +11,11 @@ class DateBottomSheet extends StatefulWidget {
 }
 
 class _DateBottomSheetState extends State<DateBottomSheet> {
+  final SharedDatePreferences sharedPrefs = SharedDatePreferences();
+
+  late final TimeOfDay rawTime;
+  late final DateTime rawDate;
+
   final double horPadding = 30;
   final double verPadding = 45;
   final _nameController = TextEditingController();
@@ -66,6 +72,29 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                   icon: const Icon(Icons.access_time),
                   showPicker: () => _openTimeSelector(context),
                 ),
+                const SizedBox(height: 16),
+                Row(
+                  children: <Widget>[
+                    OutlinedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Back'),
+                    ),
+                    const Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        sharedPrefs.saveDateValue(
+                            'name',
+                            'date',
+                            _nameController.text,
+                            DateTime(rawDate.year, rawDate.month, rawDate.day,
+                                    rawTime.hour, rawTime.minute)
+                                .millisecondsSinceEpoch);
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Add date'),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
@@ -82,6 +111,7 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
       lastDate: dateNow,
     );
     if (newDate == null) return;
+    rawDate = newDate;
     _dateController.text = DateFormat('yyyy-MM-dd').format(newDate);
   }
 
@@ -92,7 +122,8 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
     );
 
     if (newTime == null) return;
-    if(context.mounted) {
+    if (context.mounted) {
+      rawTime = newTime;
       _timeController.text = newTime.format(context);
     }
   }

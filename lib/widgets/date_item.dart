@@ -16,6 +16,7 @@ class _DateItemState extends State<DateItem> {
   @override
   void initState() {
     super.initState();
+    tCalc.initializeEventDate();
     tCalc.timer = Timer.periodic(
       const Duration(milliseconds: 500),
       (timer) => _updateTime(),
@@ -36,11 +37,11 @@ class _DateItemState extends State<DateItem> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final textFont = GoogleFonts.rosarioTextTheme();
     const double boxWidth = 350.0;
     const double boxHeightSpacing = 10.0;
     const double elv = 10.0;
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final textFont = GoogleFonts.rosarioTextTheme();
     final shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),
     );
