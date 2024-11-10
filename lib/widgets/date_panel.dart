@@ -55,8 +55,6 @@ class _DatePanelState extends State<DatePanel> {
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
         child: Card(
-          color: colorScheme.primary,
-          shadowColor: colorScheme.onPrimaryContainer,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

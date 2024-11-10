@@ -8,7 +8,7 @@ const double cardBorderSideWidth = 10.0;
 const double cardBorderSideStrokeAlign = 1.0;
 
 ColorScheme get colorScheme => ColorScheme.fromSeed(
-      seedColor: const Color.fromARGB(255, 67, 35, 65),
+      seedColor: const Color.fromARGB(255, 253, 169, 238),
     );
 
 ThemeMode themeMode() => ThemeMode.dark;
@@ -18,6 +18,7 @@ ThemeData mainTheme() => ThemeData(
       colorScheme: colorScheme,
       cardTheme: CardTheme(
         margin: const EdgeInsets.all(margin),
+        color: colorScheme.primary,
         shadowColor: Colors.black,
         elevation: 10.0,
         shape: RoundedRectangleBorder(
