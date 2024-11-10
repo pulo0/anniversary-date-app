@@ -37,6 +37,7 @@ class TabScreen extends StatelessWidget {
           backgroundColor: colorScheme.primary,
           foregroundColor: colorScheme.onPrimary,
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         body: const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

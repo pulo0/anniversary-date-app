@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
 
 class TimeCalculations {

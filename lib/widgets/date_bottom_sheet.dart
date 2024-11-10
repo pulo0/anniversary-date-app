@@ -1,9 +1,9 @@
-import 'package:anniversary_date_app/tools/name_helper.dart';
-import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
-import 'package:anniversary_date_app/tools/time_calculations.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:anniversary_date_app/style/app_theme.dart';
 import 'package:anniversary_date_app/widgets/custom_input_field.dart';
+import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
+import 'package:anniversary_date_app/logic/service_locator.dart';
 
 class DateBottomSheet extends StatefulWidget {
   const DateBottomSheet({super.key});
@@ -13,9 +13,7 @@ class DateBottomSheet extends StatefulWidget {
 }
 
 class _DateBottomSheetState extends State<DateBottomSheet> {
-  final SharedDatePreferences sharedPrefs = SharedDatePreferences();
-  final TimeCalculations tCalc = TimeCalculations();
-  final NameHelper nameHelper = NameHelper();
+  final _sharedPrefs = locator<SharedDatePreferences>();
 
   late final TimeOfDay rawTime;
   late final DateTime rawDate;
@@ -86,7 +84,7 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
-                        sharedPrefs.saveDateValue(
+                        _sharedPrefs.saveDateValue(
                             'name',
                             'date',
                             _nameController.text,
@@ -109,11 +107,19 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
 
   _openDateSelector(BuildContext context) async {
     final newDate = await showDatePicker(
-      context: context,
-      initialDate: dateNow,
-      firstDate: dateLast,
-      lastDate: dateNow,
-    );
+        context: context,
+        initialDate: dateNow,
+        firstDate: dateLast,
+        lastDate: dateNow,
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData(
+              useMaterial3: true,
+              colorScheme: colorScheme,
+            ),
+            child: child!,
+          );
+        });
     if (newDate == null) return;
     rawDate = newDate;
     _dateController.text = DateFormat('yyyy-MM-dd').format(newDate);
@@ -121,9 +127,17 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
 
   _openTimeSelector(BuildContext context) async {
     final newTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
+        context: context,
+        initialTime: TimeOfDay.now(),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData(
+              useMaterial3: true,
+              colorScheme: colorScheme,
+            ),
+            child: child!,
+          );
+        });
 
     if (newTime == null) return;
     if (context.mounted) {

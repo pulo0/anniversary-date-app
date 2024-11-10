@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:anniversary_date_app/style/app_theme.dart';
 import 'package:anniversary_date_app/tools/name_helper.dart';
 import 'package:anniversary_date_app/tools/time_calculations.dart';
+import 'package:anniversary_date_app/logic/service_locator.dart';
 
 class DatePanel extends StatefulWidget {
   const DatePanel({super.key});
@@ -12,15 +13,15 @@ class DatePanel extends StatefulWidget {
 }
 
 class _DatePanelState extends State<DatePanel> {
-  TimeCalculations tCalc = TimeCalculations();
-  NameHelper nameHelper = NameHelper();
+  final _tCalc = locator<TimeCalculations>();
+  final _nameHelper = locator<NameHelper>();
 
   @override
   void initState() {
     super.initState();
-    tCalc.initializeEventDate();
-    nameHelper.initializeEventName();
-    tCalc.timer = Timer.periodic(
+    _tCalc.initializeEventDate();
+    _nameHelper.initializeEventName();
+    _tCalc.timer = Timer.periodic(
       const Duration(milliseconds: 500),
       (timer) => _updateTime(),
     );
@@ -28,28 +29,25 @@ class _DatePanelState extends State<DatePanel> {
 
   @override
   void dispose() {
-    tCalc.timer?.cancel();
+    _tCalc.timer?.cancel();
     super.dispose();
   }
 
   void _updateTime() {
     setState(() {
-      tCalc.time = DateTime.now();
-      tCalc.initializeEventDate();
-      nameHelper.initializeEventName();
+      _tCalc.time = DateTime.now();
+      _tCalc.initializeEventDate();
+      _nameHelper.initializeEventName();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final textFont = GoogleFonts.rosarioTextTheme();
+    final ColorScheme colorScheme = mainTheme().colorScheme;
+    final TextTheme textTheme = mainTheme().textTheme;
+
     const double boxWidth = 350.0;
     const double boxHeightSpacing = 10.0;
-    const double elv = 10.0;
-    final shape = RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15),
-    );
 
     return SizedBox(
       width: boxWidth,
@@ -57,12 +55,6 @@ class _DatePanelState extends State<DatePanel> {
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
         child: Card(
-          shape: ShapeBorder.lerp(
-            shape,
-            shape,
-            0.5,
-          ),
-          elevation: elv,
           color: colorScheme.primary,
           shadowColor: colorScheme.onPrimaryContainer,
           child: Padding(
@@ -70,22 +62,22 @@ class _DatePanelState extends State<DatePanel> {
             child: Column(
               children: [
                 Text(
-                  nameHelper.getNamePreference(),
+                  _nameHelper.getNamePreference(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: colorScheme.onPrimary,
                     fontSize: 20,
-                    fontFamily: textFont.bodyLarge?.fontFamily,
+                    fontFamily: textTheme.bodyMedium!.fontFamily,
                   ),
                 ),
                 const SizedBox(height: boxHeightSpacing),
                 Text(
-                  tCalc.getDateFormattedString(),
+                  _tCalc.getDateFormattedString(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: colorScheme.onPrimary,
                     fontSize: 20,
-                    fontFamily: textFont.bodyMedium?.fontFamily,
+                    fontFamily: textTheme.bodyMedium!.fontFamily,
                   ),
                 ),
                 const SizedBox(height: boxHeightSpacing),
@@ -98,21 +90,21 @@ class _DatePanelState extends State<DatePanel> {
                 TextButton(
                   onPressed: () {
                     setState(() {
-                      tCalc.perClickTimeIndex++;
-                      if (tCalc.perClickTimeIndex ==
-                          tCalc.timeNames.length + 1) {
-                        tCalc.perClickTimeIndex = 0;
+                      _tCalc.perClickTimeIndex++;
+                      if (_tCalc.perClickTimeIndex ==
+                          _tCalc.timeNames.length + 1) {
+                        _tCalc.perClickTimeIndex = 0;
                       }
                     });
                   },
                   child: Text(
-                    tCalc.perClickTimeIndex != tCalc.timeNames.length
-                        ? tCalc.getCalcTimeToStrCycle()
-                        : tCalc.getCalcTimeToStr(),
+                    _tCalc.perClickTimeIndex != _tCalc.timeNames.length
+                        ? _tCalc.getCalcTimeToStrCycle()
+                        : _tCalc.getCalcTimeToStr(),
                     style: TextStyle(
                       color: colorScheme.onPrimary,
                       fontSize: 30,
-                      fontFamily: textFont.bodyMedium?.fontFamily,
+                      fontFamily: textTheme.bodyLarge?.fontFamily,
                     ),
                     textAlign: TextAlign.center,
                   ),

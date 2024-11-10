@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:anniversary_date_app/style/app_theme.dart';
 
 class CustomInputField extends StatelessWidget {
   final TextEditingController controller;
@@ -21,37 +20,18 @@ class CustomInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double radius = 4;
-    const double opacity = 0.65;
-    const double allPadding = 10;
-    const int max = 40;
+    const int maxLetterCount = 40;
 
     return TextField(
       controller: controller,
       autocorrect: isInputText ? true : false,
-      maxLength: isInputText ? max : null,
+      maxLength: isInputText ? maxLetterCount : null,
       onTap: isInputText ? null : showPicker,
       readOnly: isInputText ? false : true,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radius),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: colorScheme.primary,
-          ),
-        ),
-        // fillColor: Colors.transparent,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: labelTxt,
         icon: icon,
         hintText: hintTxt,
-        hintStyle: TextStyle(
-          color: colorScheme.outline.withOpacity(opacity),
-        ),
-        filled: true,
-        // fillColor: colorScheme.onTertiary,
-        contentPadding: const EdgeInsets.all(allPadding),
       ),
     );
   }
