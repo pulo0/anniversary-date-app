@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
 import 'package:anniversary_date_app/widgets/date_bottom_sheet.dart';
-import 'package:anniversary_date_app/widgets/date_item.dart';
+import 'package:anniversary_date_app/widgets/date_panel.dart';
 
 class TabScreen extends StatelessWidget {
   const TabScreen({super.key});
@@ -42,7 +42,7 @@ class TabScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              DateItem(),
+              DatePanel(),
             ],
           ),
         ),

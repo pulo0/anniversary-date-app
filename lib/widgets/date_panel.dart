@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:anniversary_date_app/tools/time_calculations.dart';
 
-class DateItem extends StatefulWidget {
-  const DateItem({super.key});
+class DatePanel extends StatefulWidget {
+  const DatePanel({super.key});
 
   @override
-  State<DateItem> createState() => _DateItemState();
+  State<DatePanel> createState() => _DatePanelState();
 }
 
-class _DateItemState extends State<DateItem> {
+class _DatePanelState extends State<DatePanel> {
   TimeCalculations tCalc = TimeCalculations();
 
   @override
@@ -65,7 +65,7 @@ class _DateItemState extends State<DateItem> {
             child: Column(
               children: [
                 Text(
-                  'Time being together with kiciuś<3:',
+                  'Name',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: colorScheme.onPrimary,
