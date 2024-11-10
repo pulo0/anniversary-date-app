@@ -9,7 +9,7 @@ class TimeCalculations {
   Timer? timer;
   int perClickTimeIndex = 0;
 
-  late DateTime eventDate;
+  DateTime eventDate = DateTime.now();
 
   final List<String> timeNames = [
     'years',
@@ -20,12 +20,8 @@ class TimeCalculations {
   ];
 
   Future<void> initializeEventDate() async {
-    int? storedDate = await sharedPrefsDate.getDateTimestampValue('date');
-    if (storedDate != null) {
-      eventDate = DateTime.fromMillisecondsSinceEpoch(storedDate);
-    } else {
-      eventDate = DateTime.now();
-    }
+    int storedDate = await sharedPrefsDate.getDateTimestampValue('date');
+    eventDate = DateTime.fromMillisecondsSinceEpoch(storedDate);
   }
 
   List<int> calcTimeCycle() {
@@ -42,11 +38,29 @@ class TimeCalculations {
   List<int> calcTimeFull() {
     final difference = time.difference(eventDate);
     return [
-      difference.inDays, // days
-      difference.inHours % 24, // hours
-      difference.inMinutes % 60, // minutes
-      difference.inSeconds % 60, //seconds
+      difference.inDays,
+      difference.inHours % 24,
+      difference.inMinutes % 60,
+      difference.inSeconds % 60,
     ];
+  }
+
+  String month() {
+    final monthArray = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+    return monthArray[eventDate.month - 1];
   }
 
   String getCalcTimeToStr() {
@@ -59,5 +73,9 @@ class TimeCalculations {
 
   String getCalcTimeToStrCycle() {
     return '${calcTimeCycle()[perClickTimeIndex]} ${timeNames[perClickTimeIndex]}';
+  }
+
+  String getDateFormattedString() {
+    return '${eventDate.day} ${month()} ${eventDate.year}';
   }
 }

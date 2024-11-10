@@ -1,4 +1,6 @@
+import 'package:anniversary_date_app/tools/name_helper.dart';
 import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
+import 'package:anniversary_date_app/tools/time_calculations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:anniversary_date_app/widgets/custom_input_field.dart';
@@ -12,6 +14,8 @@ class DateBottomSheet extends StatefulWidget {
 
 class _DateBottomSheetState extends State<DateBottomSheet> {
   final SharedDatePreferences sharedPrefs = SharedDatePreferences();
+  final TimeCalculations tCalc = TimeCalculations();
+  final NameHelper nameHelper = NameHelper();
 
   late final TimeOfDay rawTime;
   late final DateTime rawDate;

@@ -8,16 +8,15 @@ class SharedDatePreferences {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(nameKey, name);
     await prefs.setInt(dateKey, formattedDate);
-
   }
 
-  Future<String?> getNameValue(String nameKey) async {
+  Future<String> getNameValue(String nameKey) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(nameKey);
+    return prefs.getString(nameKey) ?? '';
   }
 
-  Future<int?> getDateTimestampValue(String dateKey) async {
+  Future<int> getDateTimestampValue(String dateKey) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(dateKey);
+    return prefs.getInt(dateKey) ?? 0;
   }
 }

@@ -8,7 +8,6 @@ class TabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     void openAddDateOverlay() {
       showModalBottomSheet(
         context: context,

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:anniversary_date_app/tools/name_helper.dart';
 import 'package:anniversary_date_app/tools/time_calculations.dart';
 
 class DatePanel extends StatefulWidget {
@@ -12,11 +13,13 @@ class DatePanel extends StatefulWidget {
 
 class _DatePanelState extends State<DatePanel> {
   TimeCalculations tCalc = TimeCalculations();
+  NameHelper nameHelper = NameHelper();
 
   @override
   void initState() {
     super.initState();
     tCalc.initializeEventDate();
+    nameHelper.initializeEventName();
     tCalc.timer = Timer.periodic(
       const Duration(milliseconds: 500),
       (timer) => _updateTime(),
@@ -32,6 +35,8 @@ class _DatePanelState extends State<DatePanel> {
   void _updateTime() {
     setState(() {
       tCalc.time = DateTime.now();
+      tCalc.initializeEventDate();
+      nameHelper.initializeEventName();
     });
   }
 
@@ -65,7 +70,7 @@ class _DatePanelState extends State<DatePanel> {
             child: Column(
               children: [
                 Text(
-                  'Name',
+                  nameHelper.getNamePreference(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: colorScheme.onPrimary,
@@ -75,7 +80,7 @@ class _DatePanelState extends State<DatePanel> {
                 ),
                 const SizedBox(height: boxHeightSpacing),
                 Text(
-                  '28th December 2021',
+                  tCalc.getDateFormattedString(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: colorScheme.onPrimary,
