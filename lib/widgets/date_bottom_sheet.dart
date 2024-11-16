@@ -1,3 +1,6 @@
+import 'package:anniversary_date_app/logic/date_cubit.dart';
+import 'package:anniversary_date_app/tools/name_helper.dart';
+import 'package:anniversary_date_app/tools/time_calculations.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
@@ -14,6 +17,8 @@ class DateBottomSheet extends StatefulWidget {
 
 class _DateBottomSheetState extends State<DateBottomSheet> {
   final _sharedPrefs = locator<SharedDatePreferences>();
+  final _tCalc = locator<TimeCalculations>();
+  final _nameHelper = locator<NameHelper>();
 
   late final TimeOfDay rawTime;
   late final DateTime rawDate;
@@ -91,6 +96,7 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                             DateTime(rawDate.year, rawDate.month, rawDate.day,
                                     rawTime.hour, rawTime.minute)
                                 .millisecondsSinceEpoch);
+                        DateCubit(_tCalc, _nameHelper).initializeData();
                         Navigator.of(context).pop();
                       },
                       child: const Text('Add date'),

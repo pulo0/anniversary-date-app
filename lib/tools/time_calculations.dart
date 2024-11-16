@@ -18,9 +18,10 @@ class TimeCalculations {
     'seconds'
   ];
 
-  Future<void> initializeEventDate() async {
+  Future<DateTime> initializeEventDate() async {
     int storedDate = await sharedPrefsDate.getDateTimestampValue('date');
     eventDate = DateTime.fromMillisecondsSinceEpoch(storedDate);
+    return eventDate;
   }
 
   List<int> calcTimeCycle() {
