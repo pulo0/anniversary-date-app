@@ -36,13 +36,13 @@ class TimeCalculations {
     ];
     return monthArray[eventDate.month - 1];
   }
-
-  Future<DateTime> initializeEventDate() async {
-    final storedDate = await sharedPrefsDate.getDateTimestampValue('date');
-    print('While initializing: ${DateTime.fromMillisecondsSinceEpoch(storedDate)}');
-    eventDate = DateTime.fromMillisecondsSinceEpoch(storedDate);
-    return eventDate;
-  }
+  //
+  // Future<DateTime> initializeEventDate() async {
+  //   // final storedDate = await sharedPrefsDate.getDateTimestampValue();
+  //   print('While initializing: ${storedDate}');
+  //   eventDate = DateTime.fromMillisecondsSinceEpoch(storedDate);
+  //   return eventDate;
+  // }
 
   List<int> calcTimeCycle() {
     final difference = time.difference(eventDate);

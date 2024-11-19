@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
@@ -16,6 +17,7 @@ class DatePanel extends StatefulWidget {
 }
 
 class _DatePanelState extends State<DatePanel> {
+  final _sharePrefs = locator<SharedDatePreferences>();
   final _tCalc = locator<TimeCalculations>();
   final _nameHelper = locator<NameHelper>();
 
@@ -50,7 +52,7 @@ class _DatePanelState extends State<DatePanel> {
 
     return BlocProvider(
       lazy: false,
-      create: (context) => DateCubit(_tCalc, _nameHelper)..initializeData(),
+      create: (context) => DateCubit(_sharePrefs)..initializeData(),
       child: BlocBuilder<DateCubit, DateState>(
         builder: (context, state) {
           if (state is InitialDateState) {
@@ -97,6 +99,7 @@ class _DatePanelState extends State<DatePanel> {
                         TextButton(
                           onPressed: () {
                             setState(() {
+                              print('New date: ${state.datePreference}');
                               _tCalc.perClickTimeIndex++;
                               if (_tCalc.perClickTimeIndex ==
                                   _tCalc.timeNames.length + 1) {

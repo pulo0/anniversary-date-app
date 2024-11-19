@@ -17,11 +17,9 @@ class DateBottomSheet extends StatefulWidget {
 
 class _DateBottomSheetState extends State<DateBottomSheet> {
   final _sharedPrefs = locator<SharedDatePreferences>();
-  final _tCalc = locator<TimeCalculations>();
-  final _nameHelper = locator<NameHelper>();
 
-  late final TimeOfDay rawTime;
-  late final DateTime rawDate;
+  late TimeOfDay rawTime;
+  late DateTime rawDate;
 
   final double horPadding = 30;
   final double verPadding = 45;
@@ -89,17 +87,17 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
-                        print('On press ${DateTime(rawDate.year, rawDate.month, rawDate.day,
-                            rawTime.hour, rawTime.minute)}');
-                        _sharedPrefs.saveDateValue(
-                            'name',
-                            'date',
-                            _nameController.text,
-                            DateTime(rawDate.year, rawDate.month, rawDate.day,
-                                    rawTime.hour, rawTime.minute)
-                                .millisecondsSinceEpoch);
-                        DateCubit(_tCalc, _nameHelper).initializeData();
-                        Navigator.of(context).pop();
+                        setState(() {
+                          print(
+                              'On press ${DateTime(rawDate.year, rawDate.month, rawDate.day, rawTime.hour, rawTime.minute).millisecondsSinceEpoch}');
+                          _sharedPrefs.saveDateValue(
+                              _nameController.text,
+                              DateTime(rawDate.year, rawDate.month, rawDate.day,
+                                  rawTime.hour, rawTime.minute)
+                                  .millisecondsSinceEpoch);
+                          DateCubit(_sharedPrefs).initializeData();
+                          Navigator.of(context).pop();
+                        });
                       },
                       child: const Text('Add date'),
                     ),
