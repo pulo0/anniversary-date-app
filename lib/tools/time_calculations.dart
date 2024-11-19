@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'package:anniversary_date_app/logic/service_locator.dart';
 import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
 
 class TimeCalculations {
-  final sharedPrefsDate = SharedDatePreferences();
+  final sharedPrefsDate = locator<SharedDatePreferences>();
 
   DateTime time = DateTime.now();
   Timer? timer;
@@ -18,8 +19,27 @@ class TimeCalculations {
     'seconds'
   ];
 
+  String month() {
+    final monthArray = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+    return monthArray[eventDate.month - 1];
+  }
+
   Future<DateTime> initializeEventDate() async {
-    int storedDate = await sharedPrefsDate.getDateTimestampValue('date');
+    final storedDate = await sharedPrefsDate.getDateTimestampValue('date');
+    print('While initializing: ${DateTime.fromMillisecondsSinceEpoch(storedDate)}');
     eventDate = DateTime.fromMillisecondsSinceEpoch(storedDate);
     return eventDate;
   }
@@ -43,24 +63,6 @@ class TimeCalculations {
       difference.inMinutes % 60,
       difference.inSeconds % 60,
     ];
-  }
-
-  String month() {
-    final monthArray = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
-    return monthArray[eventDate.month - 1];
   }
 
   String getCalcTimeToStr() {

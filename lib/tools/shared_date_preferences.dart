@@ -17,6 +17,7 @@ class SharedDatePreferences {
 
   Future<int> getDateTimestampValue(String dateKey) async {
     final prefs = await SharedPreferences.getInstance();
+    print('Gotten data: ${prefs.getInt(dateKey) ?? 0}');
     return prefs.getInt(dateKey) ?? 0;
   }
 }

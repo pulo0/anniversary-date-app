@@ -49,6 +49,7 @@ class _DatePanelState extends State<DatePanel> {
     const double boxHeightSpacing = 10.0;
 
     return BlocProvider(
+      lazy: false,
       create: (context) => DateCubit(_tCalc, _nameHelper)..initializeData(),
       child: BlocBuilder<DateCubit, DateState>(
         builder: (context, state) {

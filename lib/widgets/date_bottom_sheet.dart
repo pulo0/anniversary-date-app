@@ -89,6 +89,8 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
+                        print('On press ${DateTime(rawDate.year, rawDate.month, rawDate.day,
+                            rawTime.hour, rawTime.minute)}');
                         _sharedPrefs.saveDateValue(
                             'name',
                             'date',
