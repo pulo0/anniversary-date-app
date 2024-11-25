@@ -59,6 +59,10 @@ class _DatePanelState extends State<DatePanel> {
             return const Center(
               child: Text('Please enter new date!'),
             );
+          } else if (state is LoadingPrefDateState) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (state is AddedPrefDateState) {
             return SizedBox(
               width: boxWidth,
@@ -71,7 +75,7 @@ class _DatePanelState extends State<DatePanel> {
                     child: Column(
                       children: [
                         Text(
-                          _nameHelper.getNamePreference(),
+                          state.namePreference,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: colorScheme.onPrimary,

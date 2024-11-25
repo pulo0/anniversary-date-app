@@ -10,15 +10,20 @@ class SharedDatePreferences {
     await prefs.setInt(SharedDatePreferencesKeys.date, formattedDate);
     await prefs.reload();
   }
-  //
-  // Future<String> getNameValue() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString(SharedDatePreferencesKeys.name) ?? '';
-  // }
-  //
-  Future<int> getDateTimestampValue() async {
+
+  Future<String> getNameValue() async {
     final prefs = await SharedPreferences.getInstance();
-    print('Gotten data: ${prefs.getInt(SharedDatePreferencesKeys.date) ?? 0}');
-    return prefs.getInt(SharedDatePreferencesKeys.date) ?? 0;
+    return prefs.getString(SharedDatePreferencesKeys.name) ?? '';
+  }
+
+  Future<int> getDateTimestampValue() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      print('Gotten data: ${prefs.getInt(SharedDatePreferencesKeys.date) ?? 0}');
+      return prefs.getInt(SharedDatePreferencesKeys.date) ?? 0;
+    } catch (e) {
+      throw Exception(e);
+    }
+
   }
 }

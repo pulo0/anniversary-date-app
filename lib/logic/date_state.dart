@@ -6,6 +6,8 @@ class InitialDateState extends DateState {
   InitialDateState({required this.currentTime});
 }
 
+class LoadingPrefDateState extends DateState {}
+
 class AddedPrefDateState extends DateState {
   final String namePreference;
   final DateTime datePreference;

@@ -1,8 +1,6 @@
-import 'package:anniversary_date_app/logic/date_cubit.dart';
-import 'package:anniversary_date_app/tools/name_helper.dart';
-import 'package:anniversary_date_app/tools/time_calculations.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:anniversary_date_app/logic/date_cubit.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
 import 'package:anniversary_date_app/widgets/custom_input_field.dart';
 import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
@@ -18,8 +16,8 @@ class DateBottomSheet extends StatefulWidget {
 class _DateBottomSheetState extends State<DateBottomSheet> {
   final _sharedPrefs = locator<SharedDatePreferences>();
 
-  late TimeOfDay rawTime;
-  late DateTime rawDate;
+  TimeOfDay rawTime = TimeOfDay.now();
+  DateTime rawDate = DateTime.now();
 
   final double horPadding = 30;
   final double verPadding = 45;
@@ -90,12 +88,12 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                         setState(() {
                           print(
                               'On press ${DateTime(rawDate.year, rawDate.month, rawDate.day, rawTime.hour, rawTime.minute).millisecondsSinceEpoch}');
+                          DateCubit(_sharedPrefs).initializeData();
                           _sharedPrefs.saveDateValue(
                               _nameController.text,
                               DateTime(rawDate.year, rawDate.month, rawDate.day,
                                   rawTime.hour, rawTime.minute)
                                   .millisecondsSinceEpoch);
-                          DateCubit(_sharedPrefs).initializeData();
                           Navigator.of(context).pop();
                         });
                       },
