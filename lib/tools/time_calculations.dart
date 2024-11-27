@@ -9,8 +9,6 @@ class TimeCalculations {
   Timer? timer;
   int perClickTimeIndex = 0;
 
-  DateTime eventDate = DateTime.now();
-
   final List<String> timeNames = [
     'years',
     'days',
@@ -19,7 +17,7 @@ class TimeCalculations {
     'seconds'
   ];
 
-  String month() {
+  String month(DateTime eventDate) {
     final monthArray = [
       'January',
       'February',
@@ -36,15 +34,8 @@ class TimeCalculations {
     ];
     return monthArray[eventDate.month - 1];
   }
-  //
-  // Future<DateTime> initializeEventDate() async {
-  //   // final storedDate = await sharedPrefsDate.getDateTimestampValue();
-  //   print('While initializing: ${storedDate}');
-  //   eventDate = DateTime.fromMillisecondsSinceEpoch(storedDate);
-  //   return eventDate;
-  // }
 
-  List<int> calcTimeCycle() {
+  List<int> calcTimeCycle(DateTime eventDate) {
     final difference = time.difference(eventDate);
     return [
       difference.inDays ~/ 365,
@@ -55,7 +46,7 @@ class TimeCalculations {
     ];
   }
 
-  List<int> calcTimeFull() {
+  List<int> calcTimeFull(DateTime eventDate) {
     final difference = time.difference(eventDate);
     return [
       difference.inDays,
@@ -65,19 +56,19 @@ class TimeCalculations {
     ];
   }
 
-  String getCalcTimeToStr() {
-    return calcTimeFull()
+  String getCalcTimeToStr(DateTime eventDate) {
+    return calcTimeFull(eventDate)
         .asMap()
         .entries
         .map((e) => '${e.value} ${timeNames[e.key + 1]}')
         .join(', ');
   }
 
-  String getCalcTimeToStrCycle() {
-    return '${calcTimeCycle()[perClickTimeIndex]} ${timeNames[perClickTimeIndex]}';
+  String getCalcTimeToStrCycle(DateTime eventDate) {
+    return '${calcTimeCycle(eventDate)[perClickTimeIndex]} ${timeNames[perClickTimeIndex]}';
   }
 
-  String getDateFormattedString() {
-    return '${eventDate.day} ${month()} ${eventDate.year}';
+  String getDateFormattedString(DateTime eventDate) {
+    return '${eventDate.day} ${month(eventDate)} ${eventDate.year}';
   }
 }

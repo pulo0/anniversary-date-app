@@ -1,13 +1,15 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:anniversary_date_app/logic/date_cubit.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
 import 'package:anniversary_date_app/widgets/custom_input_field.dart';
-import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
+import 'package:anniversary_date_app/logic/date_cubit.dart';
 import 'package:anniversary_date_app/logic/service_locator.dart';
+import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
 
 class DateBottomSheet extends StatefulWidget {
-  const DateBottomSheet({super.key});
+  const DateBottomSheet(this._dateCubit, {super.key});
+
+  final DateCubit _dateCubit;
 
   @override
   State<DateBottomSheet> createState() => _DateBottomSheetState();
@@ -86,14 +88,16 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          print(
-                              'On press ${DateTime(rawDate.year, rawDate.month, rawDate.day, rawTime.hour, rawTime.minute).millisecondsSinceEpoch}');
-                          DateCubit(_sharedPrefs).initializeData();
-                          _sharedPrefs.saveDateValue(
-                              _nameController.text,
-                              DateTime(rawDate.year, rawDate.month, rawDate.day,
-                                  rawTime.hour, rawTime.minute)
-                                  .millisecondsSinceEpoch);
+                          final formattedDate = DateTime(
+                                  rawDate.year,
+                                  rawDate.month,
+                                  rawDate.day,
+                                  rawTime.hour,
+                                  rawTime.minute)
+                              .millisecondsSinceEpoch;
+                          _sharedPrefs.saveNameValue(_nameController.text);
+                          _sharedPrefs.saveDateValue(formattedDate);
+                          widget._dateCubit.initializeData();
                           Navigator.of(context).pop();
                         });
                       },
