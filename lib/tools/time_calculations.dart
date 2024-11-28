@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:intl/intl.dart';
 import 'package:anniversary_date_app/logic/service_locator.dart';
 import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
 
@@ -17,22 +18,8 @@ class TimeCalculations {
     'seconds'
   ];
 
-  String month(DateTime eventDate) {
-    final monthArray = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
-    return monthArray[eventDate.month - 1];
+  String getDateFormattedString(DateTime eventDate) {
+    return DateFormat('d MMMM y').format(eventDate);
   }
 
   List<int> calcTimeCycle(DateTime eventDate) {
@@ -44,6 +31,10 @@ class TimeCalculations {
       difference.inMinutes,
       difference.inSeconds,
     ];
+  }
+
+  String getCalcTimeToStrCycle(DateTime eventDate) {
+    return '${calcTimeCycle(eventDate)[perClickTimeIndex]} ${timeNames[perClickTimeIndex]}';
   }
 
   List<int> calcTimeFull(DateTime eventDate) {
@@ -62,13 +53,5 @@ class TimeCalculations {
         .entries
         .map((e) => '${e.value} ${timeNames[e.key + 1]}')
         .join(', ');
-  }
-
-  String getCalcTimeToStrCycle(DateTime eventDate) {
-    return '${calcTimeCycle(eventDate)[perClickTimeIndex]} ${timeNames[perClickTimeIndex]}';
-  }
-
-  String getDateFormattedString(DateTime eventDate) {
-    return '${eventDate.day} ${month(eventDate)} ${eventDate.year}';
   }
 }
