@@ -4,6 +4,8 @@ import 'package:anniversary_date_app/logic/service_locator.dart';
 import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
 
 class TimeCalculations {
+  TimeCalculations();
+
   final sharedPrefsDate = locator<SharedDatePreferences>();
 
   DateTime time = DateTime.now();
@@ -31,6 +33,15 @@ class TimeCalculations {
       difference.inMinutes,
       difference.inSeconds,
     ];
+  }
+
+  void initCycleIndex(DateTime eventDate) {
+    perClickTimeIndex = 0;
+    for (int i = 0; i < timeNames.length; i++) {
+      if (calcTimeCycle(eventDate)[perClickTimeIndex] == 0) {
+        perClickTimeIndex++;
+      }
+    }
   }
 
   String getCalcTimeToStrCycle(DateTime eventDate) {

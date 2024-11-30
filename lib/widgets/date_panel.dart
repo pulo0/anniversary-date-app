@@ -21,6 +21,7 @@ class _DatePanelState extends State<DatePanel> {
   @override
   void initState() {
     super.initState();
+    _tCalc.initCycleIndex(widget.dateState);
     _tCalc.timer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) => _updateTime(),
@@ -52,60 +53,73 @@ class _DatePanelState extends State<DatePanel> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Text(
-                  widget.nameState,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: colorScheme.onPrimary,
-                    fontSize: 20,
-                    fontFamily: textTheme.bodyMedium!.fontFamily,
-                  ),
-                ),
-                const SizedBox(height: boxHeightSpacing),
-                Text(
-                  _tCalc.getDateFormattedString(widget.dateState),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: colorScheme.onPrimary,
-                    fontSize: 20,
-                    fontFamily: textTheme.bodyMedium!.fontFamily,
-                  ),
-                ),
-                const SizedBox(height: boxHeightSpacing),
-                Icon(
-                  Icons.favorite,
-                  color: colorScheme.onPrimary,
-                  size: 30,
-                  semanticLabel: 'Heart',
-                ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _tCalc.perClickTimeIndex++;
-                      if (_tCalc.perClickTimeIndex ==
-                          _tCalc.timeNames.length + 1) {
-                        _tCalc.perClickTimeIndex = 0;
-                      }
-                    });
-                  },
-                  child: Text(
-                    _tCalc.perClickTimeIndex != _tCalc.timeNames.length
-                        ? _tCalc.getCalcTimeToStrCycle(widget.dateState)
-                        : _tCalc.getCalcTimeToStr(widget.dateState),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: colorScheme.primaryContainer.withOpacity(0.8),
+                offset: const Offset(9.5, 12.0),
+                blurRadius: 9.0,
+                spreadRadius: 4.9,
+              )
+            ],
+          ),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text(
+                    widget.nameState,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: colorScheme.onPrimary,
-                      fontSize: 30,
-                      fontFamily: textTheme.bodyLarge?.fontFamily,
+                      fontSize: 20,
+                      fontFamily: textTheme.bodyMedium!.fontFamily,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-              ],
+                  const SizedBox(height: boxHeightSpacing),
+                  Text(
+                    _tCalc.getDateFormattedString(widget.dateState),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: colorScheme.onPrimary,
+                      fontSize: 20,
+                      fontFamily: textTheme.bodyMedium!.fontFamily,
+                    ),
+                  ),
+                  const SizedBox(height: boxHeightSpacing),
+                  Icon(
+                    Icons.favorite,
+                    color: colorScheme.onPrimary,
+                    size: 30,
+                    semanticLabel: 'Heart',
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _tCalc.perClickTimeIndex++;
+                        if (_tCalc.perClickTimeIndex ==
+                            _tCalc.timeNames.length + 1) {
+                          _tCalc.initCycleIndex(widget.dateState);
+                        }
+                      });
+                    },
+                    child: Text(
+                      _tCalc.perClickTimeIndex != _tCalc.timeNames.length
+                          ? _tCalc.getCalcTimeToStrCycle(widget.dateState)
+                          : _tCalc.getCalcTimeToStr(widget.dateState),
+                      style: TextStyle(
+                        color: colorScheme.onPrimary,
+                        fontSize: 30,
+                        fontFamily: textTheme.bodyLarge?.fontFamily,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

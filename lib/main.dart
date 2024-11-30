@@ -20,7 +20,6 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Anniversary Date App',
       theme: mainTheme(),
-      themeMode: themeMode(),
       home: const TabScreen(),
     );
   }

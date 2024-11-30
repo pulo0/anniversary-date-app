@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:anniversary_date_app/style/app_theme.dart';
 import 'package:anniversary_date_app/widgets/date_panel.dart';
 import 'package:anniversary_date_app/widgets/date_bottom_sheet.dart';
 import 'package:anniversary_date_app/logic/date_cubit.dart';
@@ -30,15 +29,10 @@ class _TabScreenState extends State<TabScreen> {
 
     Widget scaffoldAddedPref(AddedPrefDateState state) {
       return Scaffold(
-        backgroundColor: Colors.transparent,
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            openAddDateOverlay();
-          },
+          onPressed: () => openAddDateOverlay(),
           label: const Text('Add date'),
           icon: const Icon(Icons.date_range_outlined),
-          backgroundColor: colorScheme.primary,
-          foregroundColor: colorScheme.onPrimary,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         body: Center(
@@ -55,18 +49,7 @@ class _TabScreenState extends State<TabScreen> {
       );
     }
 
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            colorScheme.primary,
-            colorScheme.onTertiaryContainer,
-          ],
-        ),
-      ),
-      child: BlocProvider(
+      return BlocProvider(
         create: (context) => dateCubit..initializeData(),
         child: BlocBuilder<DateCubit, DateState>(
           builder: (context, state) {
@@ -83,7 +66,6 @@ class _TabScreenState extends State<TabScreen> {
             }
           },
         ),
-      ),
-    );
+      );
   }
 }

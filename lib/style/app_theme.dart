@@ -8,18 +8,22 @@ const double cardBorderSideWidth = 10.0;
 const double cardBorderSideStrokeAlign = 1.0;
 
 ColorScheme get colorScheme => ColorScheme.fromSeed(
-      seedColor: const Color.fromARGB(255, 253, 169, 238),
+      seedColor: const Color.fromARGB(255, 71, 2, 76),
+      brightness: Brightness.dark,
     );
-
-ThemeMode themeMode() => ThemeMode.dark;
 
 ThemeData mainTheme() => ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
+      scaffoldBackgroundColor: colorScheme.inversePrimary,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+      ),
       cardTheme: CardTheme(
         margin: const EdgeInsets.all(margin),
         color: colorScheme.primary,
-        shadowColor: Colors.black,
+        shadowColor: colorScheme.shadow,
         elevation: 10.0,
         shape: RoundedRectangleBorder(
           side: BorderSide(
@@ -47,7 +51,7 @@ ThemeData mainTheme() => ThemeData(
         filled: true,
         contentPadding: const EdgeInsets.all(margin),
       ),
-      textTheme: GoogleFonts.rosarioTextTheme().copyWith(
+      textTheme: TextTheme(
         bodyLarge: GoogleFonts.rosario(),
         bodyMedium: GoogleFonts.rosario(),
       ),

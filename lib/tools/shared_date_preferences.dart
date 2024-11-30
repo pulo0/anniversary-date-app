@@ -6,7 +6,9 @@ class SharedDatePreferences {
 
   Future<void> saveNameValue(String name) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(SharedDatePreferencesKeys.name, name);
+    if (name != '') {
+      await prefs.setString(SharedDatePreferencesKeys.name, name);
+    }
   }
 
   Future<void> saveDateValue(int date) async {
