@@ -12,6 +12,9 @@ void setupLocator() {
       () => SharedDatePreferences());
 
   locator.registerLazySingleton<DateCubit>(
-    () => DateCubit(locator<SharedDatePreferences>()),
+    () => DateCubit(
+      locator<SharedDatePreferences>(),
+      locator<TimeCalculations>(),
+    ),
   );
 }

@@ -21,7 +21,6 @@ class _DatePanelState extends State<DatePanel> {
   @override
   void initState() {
     super.initState();
-    _tCalc.initCycleIndex(widget.dateState);
     _tCalc.timer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) => _updateTime(),
