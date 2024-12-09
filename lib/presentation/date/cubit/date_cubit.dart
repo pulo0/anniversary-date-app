@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:anniversary_date_app/tools/time_calculations.dart';
+import 'package:anniversary_date_app/utils/time_calculations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:anniversary_date_app/logic/date_state.dart';
-import 'package:anniversary_date_app/tools/shared_date_preferences.dart';
+import 'package:anniversary_date_app/presentation/date/cubit/date_state.dart';
+import 'package:anniversary_date_app/utils/shared_date_preferences.dart';
 
 class DateCubit extends Cubit<DateState> {
   DateCubit(this.sharedDatePreferences, this.tCalc) : super(InitialDateState());

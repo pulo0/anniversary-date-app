@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:anniversary_date_app/tools/shared_date_preferences_keys.dart';
+import 'package:anniversary_date_app/utils/shared_date_preferences_keys.dart';
 
 class SharedDatePreferences {
   SharedDatePreferences();

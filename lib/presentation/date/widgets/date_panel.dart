@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
-import 'package:anniversary_date_app/logic/service_locator.dart';
-import 'package:anniversary_date_app/tools/time_calculations.dart';
+import 'package:anniversary_date_app/data/service/service_locator.dart';
+import 'package:anniversary_date_app/utils/time_calculations.dart';
 
 class DatePanel extends StatefulWidget {
   const DatePanel(

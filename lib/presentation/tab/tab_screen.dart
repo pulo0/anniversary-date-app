@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:anniversary_date_app/widgets/date_panel.dart';
-import 'package:anniversary_date_app/widgets/date_bottom_sheet.dart';
-import 'package:anniversary_date_app/logic/date_cubit.dart';
-import 'package:anniversary_date_app/logic/date_state.dart';
-import 'package:anniversary_date_app/logic/service_locator.dart';
+import 'package:anniversary_date_app/presentation/date/widgets/date_panel.dart';
+import 'package:anniversary_date_app/presentation/bottom_sheet/date_bottom_sheet.dart';
+import 'package:anniversary_date_app/presentation/date/cubit/date_cubit.dart';
+import 'package:anniversary_date_app/presentation/date/cubit/date_state.dart';
+import 'package:anniversary_date_app/data/service/service_locator.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
