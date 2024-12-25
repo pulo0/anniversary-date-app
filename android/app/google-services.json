@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "251125724269",
+    "project_id": "anniversary-app-flutter",
+    "storage_bucket": "anniversary-app-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:251125724269:android:3ce474808da26c74c4bb64",
+        "android_client_info": {
+          "package_name": "com.anniversary_date_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx9TuVJDrRhcFA6cCDkxYwSY7v-95eHdI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
