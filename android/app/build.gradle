@@ -8,6 +8,16 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:33.7.0')
+
+    implementation 'com.google.firebase:firebase-messaging:24.1.0'
+
+    implementation 'com.google.firebase:firebase-analytics:22.1.2'
+}
+
+apply plugin: 'com.google.gms.google-services'
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
