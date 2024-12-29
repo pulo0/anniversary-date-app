@@ -1,10 +1,11 @@
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:anniversary_date_app/style/app_theme.dart';
-import 'package:anniversary_date_app/presentation/bottom_sheet/widgets/custom_input_field.dart';
-import 'package:anniversary_date_app/presentation/date/cubit/date_cubit.dart';
-import 'package:anniversary_date_app/data/service/service_locator.dart';
+import 'package:anniversary_date_app/utils/toast.dart';
 import 'package:anniversary_date_app/utils/shared_date_preferences.dart';
+import 'package:anniversary_date_app/utils/validator_bottom_sheet.dart';
+import 'package:anniversary_date_app/presentation/date/cubit/date_cubit.dart';
+import 'package:anniversary_date_app/presentation/bottom_sheet/widgets/custom_input_field.dart';
+import 'package:anniversary_date_app/domain/repositories/selector_repository.dart';
+import 'package:anniversary_date_app/data/service/service_locator.dart';
 
 class DateBottomSheet extends StatefulWidget {
   const DateBottomSheet(this._dateCubit, {super.key});
@@ -17,6 +18,10 @@ class DateBottomSheet extends StatefulWidget {
 
 class _DateBottomSheetState extends State<DateBottomSheet> {
   final _sharedPrefs = locator<SharedDatePreferences>();
+  final _selectorRepository = locator<SelectorRepository>();
+  final _validator = locator<ValidatorBottomSheet>();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TimeOfDay rawTime = TimeOfDay.now();
   DateTime rawDate = DateTime.now();
@@ -27,8 +32,7 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
   final _dateController = TextEditingController();
   final _timeController = TextEditingController();
   final DateTime dateNow = DateTime.now();
-  final DateTime dateLast = DateTime(1800);
-  DateTime? selectedDateTime;
+  final DateTime dateFirst = DateTime(1800);
 
   @override
   void dispose() {
@@ -41,17 +45,18 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final keyboardPlacement = MediaQuery.of(context).viewInsets.bottom;
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(
-              horPadding,
-              verPadding,
-              horPadding,
-              keyboardPlacement + verPadding,
-            ),
+    return SafeArea(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            horPadding,
+            verPadding,
+            horPadding,
+            keyboardPlacement + verPadding,
+          ),
+          child: Form(
+            key: _formKey,
             child: Column(
               children: <Widget>[
                 CustomInputField(
@@ -66,7 +71,17 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                   hintTxt: 'Select date of event',
                   isInputText: false,
                   icon: const Icon(Icons.date_range_outlined),
-                  showPicker: () => _openDateSelector(context),
+                  showPicker: () => _selectorRepository.openDateSelector(
+                    context,
+                    rawDate: rawDate,
+                    initialAndLastDate: dateNow,
+                    firstDate: dateFirst,
+                    controller: _dateController,
+                    onDateSelected: (item) => rawDate = item,
+                  ),
+                  validator: _validator
+                      .validatorRequire('This field is required')
+                      .call,
                 ),
                 const SizedBox(height: 16),
                 CustomInputField(
@@ -75,7 +90,16 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                   hintTxt: 'Select time of your date',
                   isInputText: false,
                   icon: const Icon(Icons.access_time),
-                  showPicker: () => _openTimeSelector(context),
+                  showPicker: () => _selectorRepository.openTimeSelector(
+                    context,
+                    rawTime: rawTime,
+                    initialTime: TimeOfDay.now(),
+                    controller: _timeController,
+                    onTimeSelected: (item) => rawTime = item,
+                  ),
+                  validator: _validator
+                      .validatorRequire('This field is required')
+                      .call,
                 ),
                 const SizedBox(height: 16),
                 Row(
@@ -88,17 +112,20 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          final formattedDate = DateTime(
-                                  rawDate.year,
-                                  rawDate.month,
-                                  rawDate.day,
-                                  rawTime.hour,
-                                  rawTime.minute)
-                              .millisecondsSinceEpoch;
-                          _sharedPrefs.saveNameValue(_nameController.text);
-                          _sharedPrefs.saveDateValue(formattedDate);
-                          widget._dateCubit.initializeData();
-                          Navigator.of(context).pop();
+                          if (_formKey.currentState!.validate()) {
+                            final formattedDate = DateTime(
+                                    rawDate.year,
+                                    rawDate.month,
+                                    rawDate.day,
+                                    rawTime.hour,
+                                    rawTime.minute)
+                                .millisecondsSinceEpoch;
+                            _sharedPrefs.saveNameValue(_nameController.text);
+                            _sharedPrefs.saveDateValue(formattedDate);
+                            widget._dateCubit.initializeData();
+                            showToast(message: 'Added new date!');
+                            Navigator.of(context).pop();
+                          }
                         });
                       },
                       child: const Text('Add date'),
@@ -108,50 +135,8 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
               ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
-  }
-
-  _openDateSelector(BuildContext context) async {
-    final newDate = await showDatePicker(
-        context: context,
-        initialDate: dateNow,
-        firstDate: dateLast,
-        lastDate: dateNow,
-
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData(
-              useMaterial3: true,
-              colorScheme: colorScheme,
-            ),
-            child: child!,
-          );
-        });
-    if (newDate == null) return;
-    rawDate = newDate;
-    _dateController.text = DateFormat('yyyy-MM-dd').format(newDate);
-  }
-
-  _openTimeSelector(BuildContext context) async {
-    final newTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData(
-              useMaterial3: true,
-              colorScheme: colorScheme,
-            ),
-            child: child!,
-          );
-        });
-
-    if (newTime == null) return;
-    if (context.mounted) {
-      rawTime = newTime;
-      _timeController.text = newTime.format(context);
-    }
   }
 }

@@ -7,6 +7,7 @@ class CustomInputField extends StatelessWidget {
   final bool isInputText;
   final Icon? icon;
   final void Function()? showPicker;
+  final String? Function(String?)? validator;
 
   const CustomInputField({
     super.key,
@@ -15,6 +16,7 @@ class CustomInputField extends StatelessWidget {
     required this.hintTxt,
     required this.isInputText,
     this.showPicker,
+    this.validator,
     this.icon,
   });
 
@@ -22,7 +24,7 @@ class CustomInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     const int maxLetterCount = 40;
 
-    return TextField(
+    return TextFormField(
       controller: controller,
       autocorrect: isInputText ? true : false,
       maxLength: isInputText ? maxLetterCount : null,
@@ -33,6 +35,7 @@ class CustomInputField extends StatelessWidget {
         icon: icon,
         hintText: hintTxt,
       ),
+      validator: validator,
     );
   }
 }
