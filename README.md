@@ -18,5 +18,5 @@ notifications, reminders to go back and check the app.
 | And stored in local storage | Since when from now the event happened | Cycle through how much years, days, minutes even second had passed |
 
 ## TODO
-[] Add background implementation of FCM
-[] Change state management on empty shared_preferences
+[ ] Add background implementation of FCM
+[ ] Change state management on empty shared_preferences
