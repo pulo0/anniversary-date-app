@@ -1,13 +1,7 @@
 import 'dart:async';
 import 'package:intl/intl.dart';
-import 'package:anniversary_date_app/data/service/service_locator.dart';
-import 'package:anniversary_date_app/utils/shared_date_preferences.dart';
 
 class TimeCalculations {
-  TimeCalculations();
-
-  final sharedPrefsDate = locator<SharedDatePreferences>();
-
   DateTime time = DateTime.now();
   Timer? timer;
   int perClickTimeIndex = 0;

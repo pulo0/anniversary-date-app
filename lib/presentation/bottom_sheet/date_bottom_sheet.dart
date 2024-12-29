@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:anniversary_date_app/utils/toast.dart';
-import 'package:anniversary_date_app/utils/shared_date_preferences.dart';
 import 'package:anniversary_date_app/utils/validator_bottom_sheet.dart';
 import 'package:anniversary_date_app/presentation/date/cubit/date_cubit.dart';
 import 'package:anniversary_date_app/presentation/bottom_sheet/widgets/custom_input_field.dart';
 import 'package:anniversary_date_app/domain/repositories/selector_repository.dart';
+import 'package:anniversary_date_app/domain/repositories/shared_prefs_repository.dart';
 import 'package:anniversary_date_app/data/service/service_locator.dart';
 
 class DateBottomSheet extends StatefulWidget {
@@ -17,7 +17,7 @@ class DateBottomSheet extends StatefulWidget {
 }
 
 class _DateBottomSheetState extends State<DateBottomSheet> {
-  final _sharedPrefs = locator<SharedDatePreferences>();
+  final _sharedPrefs = locator<SharedPrefsRepository>();
   final _selectorRepository = locator<SelectorRepository>();
   final _validator = locator<ValidatorBottomSheet>();
 
