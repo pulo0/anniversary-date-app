@@ -64,60 +64,63 @@ class _DatePanelState extends State<DatePanel> {
               )
             ],
           ),
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    widget.nameState,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: colorScheme.onPrimary,
-                      fontSize: 20,
-                      fontFamily: textTheme.bodyMedium!.fontFamily,
-                    ),
-                  ),
-                  const SizedBox(height: boxHeightSpacing),
-                  Text(
-                    _tCalc.getDateFormattedString(widget.dateState),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: colorScheme.onPrimary,
-                      fontSize: 20,
-                      fontFamily: textTheme.bodyMedium!.fontFamily,
-                    ),
-                  ),
-                  const SizedBox(height: boxHeightSpacing),
-                  Icon(
-                    Icons.favorite,
-                    color: colorScheme.onPrimary,
-                    size: 30,
-                    semanticLabel: 'Heart',
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _tCalc.perClickTimeIndex++;
-                        if (_tCalc.perClickTimeIndex ==
-                            _tCalc.timeNames.length + 1) {
-                          _tCalc.initCycleIndex(widget.dateState);
-                        }
-                      });
-                    },
-                    child: Text(
-                      _tCalc.perClickTimeIndex != _tCalc.timeNames.length
-                          ? _tCalc.getCalcTimeToStrCycle(widget.dateState)
-                          : _tCalc.getCalcTimeToStr(widget.dateState),
+          child: Hero(
+            tag: 'date-card',
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      widget.nameState,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: colorScheme.onPrimary,
-                        fontSize: 30,
-                        fontFamily: textTheme.bodyLarge?.fontFamily,
+                        fontSize: 20,
+                        fontFamily: textTheme.bodyMedium!.fontFamily,
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                  ),
-                ],
+                    const SizedBox(height: boxHeightSpacing),
+                    Text(
+                      _tCalc.getDateFormattedString(widget.dateState),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: colorScheme.onPrimary,
+                        fontSize: 20,
+                        fontFamily: textTheme.bodyMedium!.fontFamily,
+                      ),
+                    ),
+                    const SizedBox(height: boxHeightSpacing),
+                    Icon(
+                      Icons.favorite,
+                      color: colorScheme.onPrimary,
+                      size: 30,
+                      semanticLabel: 'Heart',
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _tCalc.perClickTimeIndex++;
+                          if (_tCalc.perClickTimeIndex ==
+                              _tCalc.timeNames.length + 1) {
+                            _tCalc.initCycleIndex(widget.dateState);
+                          }
+                        });
+                      },
+                      child: Text(
+                        _tCalc.perClickTimeIndex != _tCalc.timeNames.length
+                            ? _tCalc.getCalcTimeToStrCycle(widget.dateState)
+                            : _tCalc.getCalcTimeToStr(widget.dateState),
+                        style: TextStyle(
+                          color: colorScheme.onPrimary,
+                          fontSize: 30,
+                          fontFamily: textTheme.bodyLarge?.fontFamily,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

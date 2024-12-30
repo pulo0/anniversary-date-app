@@ -21,4 +21,4 @@ notifications, reminders to go back and check the app.
 ## TODO
 
 - [ ] Add background implementation of FCM
-- [ ] Change state management on empty shared_preferences
+- [x] Change state management on empty shared_preferences

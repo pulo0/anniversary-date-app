@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:anniversary_date_app/presentation/tab/widgets/scaffold_added_pref.dart';
+import 'package:anniversary_date_app/presentation/date/widgets/date_panel.dart';
+import 'package:anniversary_date_app/presentation/date/widgets/starter_date_panel.dart';
+import 'package:anniversary_date_app/presentation/tab/widgets/scaffold_date.dart';
 import 'package:anniversary_date_app/presentation/date/cubit/date_cubit.dart';
 import 'package:anniversary_date_app/presentation/date/cubit/date_state.dart';
 import 'package:anniversary_date_app/domain/repositories/overlay_repository.dart';
@@ -24,15 +26,19 @@ class _TabScreenState extends State<TabScreen> {
       child: BlocBuilder<DateCubit, DateState>(
         builder: (context, state) {
           if (state is InitialDateState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is AddedPrefDateState) {
-            return ScaffoldAddedPref(
+            return ScaffoldDate(
               overlayRepository: overlayRepository,
               dateCubit: dateCubit,
-              dateState: state.datePreference,
-              nameState: state.namePreference,
+              scaffoldChild: const StarterDatePanel(),
+            );
+          } else if (state is AddedPrefDateState) {
+            return ScaffoldDate(
+              overlayRepository: overlayRepository,
+              dateCubit: dateCubit,
+              scaffoldChild: DatePanel(
+                nameState: state.namePreference,
+                dateState: state.datePreference,
+              ),
             );
           } else {
             return const Center(

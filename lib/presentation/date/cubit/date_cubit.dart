@@ -14,12 +14,16 @@ class DateCubit extends Cubit<DateState> {
     emit(InitialDateState());
     final prefName = await sharedPrefsRepository.getNameValue();
     final retrievedDate = await sharedPrefsRepository.getDateTimestampValue();
-    tCalc.initCycleIndex(DateTime.fromMillisecondsSinceEpoch(retrievedDate));
-    emit(
-      AddedPrefDateState(
-        namePreference: prefName,
-        datePreference: DateTime.fromMillisecondsSinceEpoch(retrievedDate),
-      ),
-    );
+    if (retrievedDate != 0) {
+      tCalc.initCycleIndex(DateTime.fromMillisecondsSinceEpoch(retrievedDate));
+      emit(
+        AddedPrefDateState(
+          namePreference: prefName,
+          datePreference: DateTime.fromMillisecondsSinceEpoch(retrievedDate),
+        ),
+      );
+    } else {
+      emit(InitialDateState());
+    }
   }
 }
