@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
 import 'package:anniversary_date_app/presentation/tab/tab_screen.dart';
 import 'package:anniversary_date_app/data/service/service_locator.dart';
@@ -24,7 +25,9 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Anniversary Date App',
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      onGenerateTitle: (context) => AppLocalizations.of(context).title,
       theme: mainTheme(),
       home: const TabScreen(),
     );

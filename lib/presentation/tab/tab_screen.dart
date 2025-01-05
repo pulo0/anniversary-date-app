@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:anniversary_date_app/presentation/date/widgets/date_panel.dart';
 import 'package:anniversary_date_app/presentation/date/widgets/starter_date_panel.dart';
 import 'package:anniversary_date_app/presentation/tab/widgets/scaffold_date.dart';
@@ -18,6 +19,7 @@ class TabScreen extends StatefulWidget {
 class _TabScreenState extends State<TabScreen> {
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
     final DateCubit dateCubit = locator<DateCubit>();
     final OverlayRepository overlayRepository = locator<OverlayRepository>();
 
@@ -41,8 +43,10 @@ class _TabScreenState extends State<TabScreen> {
               ),
             );
           } else {
-            return const Center(
-              child: Text('Wrong state'),
+            return Center(
+              child: Text(
+                locale.wrongState,
+              ),
             );
           }
         },

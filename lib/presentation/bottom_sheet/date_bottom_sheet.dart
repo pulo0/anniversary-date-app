@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:anniversary_date_app/utils/toast.dart';
 import 'package:anniversary_date_app/utils/validator_bottom_sheet.dart';
 import 'package:anniversary_date_app/presentation/date/cubit/date_cubit.dart';
@@ -44,6 +45,7 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
     final keyboardPlacement = MediaQuery.of(context).viewInsets.bottom;
     return SafeArea(
       child: SingleChildScrollView(
@@ -61,14 +63,14 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
               children: <Widget>[
                 CustomInputField(
                   controller: _nameController,
-                  labelTxt: 'Name',
-                  hintTxt: 'Special event name',
+                  labelTxt: locale.nameLabelText,
+                  hintTxt: locale.nameHintText,
                   isInputText: true,
                 ),
                 CustomInputField(
                   controller: _dateController,
-                  labelTxt: 'Date',
-                  hintTxt: 'Select date of event',
+                  labelTxt: locale.dateLabelText,
+                  hintTxt: locale.dateHintText,
                   isInputText: false,
                   icon: const Icon(Icons.date_range_outlined),
                   showPicker: () => _selectorRepository.openDateSelector(
@@ -80,14 +82,14 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                     onDateSelected: (item) => rawDate = item,
                   ),
                   validator: _validator
-                      .validatorRequire('This field is required')
+                      .validatorRequire(locale.validationRequireField)
                       .call,
                 ),
                 const SizedBox(height: 16),
                 CustomInputField(
                   controller: _timeController,
-                  labelTxt: 'Time',
-                  hintTxt: 'Select time of your date',
+                  labelTxt: locale.timeLabelText,
+                  hintTxt: locale.timeHintText,
                   isInputText: false,
                   icon: const Icon(Icons.access_time),
                   showPicker: () => _selectorRepository.openTimeSelector(
@@ -98,7 +100,7 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                     onTimeSelected: (item) => rawTime = item,
                   ),
                   validator: _validator
-                      .validatorRequire('This field is required')
+                      .validatorRequire(locale.validationRequireField)
                       .call,
                 ),
                 const SizedBox(height: 16),
@@ -106,7 +108,7 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                   children: <Widget>[
                     OutlinedButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Back'),
+                      child: Text(locale.backButtonText),
                     ),
                     const Spacer(),
                     ElevatedButton(
@@ -123,12 +125,12 @@ class _DateBottomSheetState extends State<DateBottomSheet> {
                             _sharedPrefs.saveNameValue(_nameController.text);
                             _sharedPrefs.saveDateValue(formattedDate);
                             widget._dateCubit.initializeData();
-                            showToast(message: 'Added new date!');
+                            showToast(message: locale.toastSuccessMessage);
                             Navigator.of(context).pop();
                           }
                         });
                       },
-                      child: const Text('Add date'),
+                      child: Text(locale.addButtonText),
                     ),
                   ],
                 )

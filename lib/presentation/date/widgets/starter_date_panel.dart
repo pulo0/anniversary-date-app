@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
 
 class StarterDatePanel extends StatelessWidget {
@@ -6,6 +7,7 @@ class StarterDatePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
     final TextTheme textTheme = mainTheme().textTheme;
 
     const double boxWidth = 350.0;
@@ -36,7 +38,7 @@ class StarterDatePanel extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      'Add your significant event',
+                      locale.mainStarterText,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: colorScheme.onPrimary,
@@ -50,10 +52,10 @@ class StarterDatePanel extends StatelessWidget {
                       Icons.favorite_border,
                       color: colorScheme.onPrimary,
                       size: 30,
-                      semanticLabel: 'Heart',
+                      semanticLabel: locale.iconHeartLabel,
                     ),
                     Text(
-                      'May your important event be actually important',
+                      locale.descStarterText,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: colorScheme.onPrimary,

@@ -1,0 +1,37 @@
+{
+  "@@locale": "en",
+  "title": "Anniversary Date App",
+  "@title": {
+    "description": "Title of the app"
+  },
+  "addDate": "Add Date",
+  "@addDate": {
+    "description": "Floating Action Button text that indicates adding the new date"
+  },
+  "wrongState": "Wrong State",
+  "@wrongState": {
+    "description": "When none of the states in Bloc/Cubit fit to criteria"
+  },
+  "mainStarterText": "Add your significant event",
+  "@mainStarterText": {
+    "description": "When user didn't add any date yet, the card appears with this title"
+  },
+  "descStarterText": "May your important event be actually important",
+  "@descStarterText": {
+    "description": "Description of the starter card"
+  },
+  "iconHeartLabel": "Heart",
+  "nameLabelText": "Name",
+  "nameHintText": "Special event name",
+  "dateLabelText": "Date",
+  "dateHintText": "Select date of event",
+  "timeLabelText": "Time",
+  "timeHintText": "Select time of your date",
+  "backButtonText": "Back",
+  "addButtonText": "Add new date",
+  "toastSuccessMessage": "Added new date!",
+  "@toastSuccessMessage": {
+    "description": "When date is date the toast appears on the screen with successfully added date text"
+  },
+  "validationRequireField": "This field is required"
+}

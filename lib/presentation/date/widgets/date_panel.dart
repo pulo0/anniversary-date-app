@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:anniversary_date_app/style/app_theme.dart';
 import 'package:anniversary_date_app/data/service/service_locator.dart';
 import 'package:anniversary_date_app/utils/time_calculations.dart';
@@ -41,6 +42,8 @@ class _DatePanelState extends State<DatePanel> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+
     final ColorScheme colorScheme = mainTheme().colorScheme;
     final TextTheme textTheme = mainTheme().textTheme;
 
@@ -95,7 +98,7 @@ class _DatePanelState extends State<DatePanel> {
                       Icons.favorite,
                       color: colorScheme.onPrimary,
                       size: 30,
-                      semanticLabel: 'Heart',
+                      semanticLabel: locale.iconHeartLabel,
                     ),
                     TextButton(
                       onPressed: () {
